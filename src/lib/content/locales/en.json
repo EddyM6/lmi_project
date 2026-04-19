@@ -1,0 +1,107 @@
+{
+  "localeLabel": "English",
+  "brand": "Levon & Mari",
+  "intro": {
+    "title": "L • M",
+    "subtitle": "With love, we invite you to our wedding"
+  },
+  "hero": {
+    "names": "Levon & Mari",
+    "date": "August 15, 2026",
+    "message": "Celebrate our most meaningful day with us."
+  },
+  "gallery": {
+    "heading": "Our Memories",
+    "caption": "Memories from a Paris night"
+  },
+  "details": {
+    "heading": "Time & Agenda",
+    "agendaHeading": "Wedding Day Plan",
+    "locationsHeading": "Locations",
+    "agenda": [
+      {
+        "icon": "🏠",
+        "title": "Levon's House Ceremony",
+        "subtitle": "Family gathering and traditional pre-wedding blessing.",
+        "location": "Levon's family home, Ashtarak, Aragatsotn Province, Armenia",
+        "time": "11:30 AM"
+      },
+      {
+        "icon": "👰",
+        "title": "Mari's House Ceremony",
+        "subtitle": "Bride's home ceremony with family traditions and welcome.",
+        "location": "Mari's family home, Ashtarak, Aragatsotn Province, Armenia",
+        "time": "12:45 PM"
+      },
+      {
+        "icon": "⛪",
+        "title": "Wedding Ceremony",
+        "subtitle": "Church ceremony in Tegher Monastery.",
+        "location": "Tegher Monastery, Tegher village, Aragatsotn Province, Armenia",
+        "time": "2:00 PM"
+      },
+      {
+        "icon": "🥂",
+        "title": "Wedding Reception",
+        "subtitle": "Dinner, toasts, and celebration at Wine Corner Restaurant.",
+        "location": "Wine Corner Restaurant, Ashtarak region, Aragatsotn Province, Armenia",
+        "time": "5:30 PM"
+      }
+    ],
+    "locations": [
+      {
+        "name": "Tegher Monastery",
+        "address": "Tegher village, Aragatsotn Province, Armenia (44.237644, 40.334148)",
+        "mapsLink": "https://yandex.com/maps/org/204381722709/?ll=44.237644%2C40.334148&z=14",
+        "mapsEmbedLink": "https://yandex.com/map-widget/v1/?ll=44.237644%2C40.334148&z=14&pt=44.237644,40.334148,pm2rdm",
+        "mapsAction": "Open church map"
+      },
+      {
+        "name": "Wine Corner Restaurant",
+        "address": "Ashtarak region, Aragatsotn Province, Armenia (44.355975, 40.284220)",
+        "mapsLink": "https://yandex.com/maps/org/wine_corner/139778273402/?ll=44.355975%2C40.284220&z=13",
+        "mapsEmbedLink": "https://yandex.com/map-widget/v1/?ll=44.355975%2C40.284220&z=13&pt=44.355975,40.284220,pm2rdm",
+        "mapsAction": "Open restaurant map"
+      }
+    ],
+    "event": {
+      "dateLabel": "Saturday, August 15, 2026",
+      "dateISO": "2026-08-15T17:30:00+04:00",
+      "ceremonyTime": "17:30",
+      "receptionTime": "19:00",
+      "venue": "Wine Corner",
+      "address": "Wine Corner",
+      "mapsLink": "https://yandex.com/maps/org/wine_corner/139778273402/?ll=44.355975%2C40.284220&z=13",
+      "mapsEmbedLink": "https://yandex.com/map-widget/v1/?ll=44.355975%2C40.284220&z=13&pt=44.355975,40.284220,pm2rdm",
+      "mapsAction": "Open map"
+    }
+  },
+  "countdown": {
+    "heading": "Time Remaining",
+    "days": "Days",
+    "hours": "Hours",
+    "minutes": "Minutes",
+    "seconds": "Seconds"
+  },
+  "rsvp": {
+    "heading": "Please confirm your attendance",
+    "name": "Name",
+    "surename": "Surname",
+    "email": "Email",
+    "attending": "Will you attend?",
+    "yes": "Yes",
+    "no": "No",
+    "guestCount": "Guest count",
+    "submit": "Submit",
+    "sending": "Sending...",
+    "success": "Thank you, your RSVP has been received.",
+    "failure": "Submission failed, please try again.",
+    "validation": {
+      "nameRequired": "Please enter your name",
+      "surenameRequired": "Please enter your surname",
+      "emailRequired": "Please enter your email",
+      "emailInvalid": "Please enter a valid email address",
+      "guestCountInvalid": "Guest count must be between 1 and 10"
+    }
+  }
+}
