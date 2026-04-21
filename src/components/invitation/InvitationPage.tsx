@@ -21,6 +21,7 @@ export function InvitationPage({ initialLocale, contentByLocale }: Props) {
   const router = useRouter();
   const [locale, setLocale] = useState<Locale>(initialLocale);
   const [showOpening, setShowOpening] = useState(true);
+  const [showContent, setShowContent] = useState(false);
 
   const content = useMemo(() => contentByLocale[locale], [contentByLocale, locale]);
 
@@ -33,12 +34,13 @@ export function InvitationPage({ initialLocale, contentByLocale }: Props) {
     <main className="app-shell">
       {showOpening ? (
         <OpeningVideoOverlay
-          mp4Src="/assets/video/opening-custom.mp4"
+          mp4Src="/assets/video/opening-custom-v2.mp4"
           posterSrc="/assets/video/opening-poster.jpg"
+          onRevealStart={() => setShowContent(true)}
           onComplete={() => setShowOpening(false)}
         />
       ) : null}
-      {!showOpening ? (
+      {showContent ? (
         <>
           <div className="ambient-bg" aria-hidden="true" />
           <nav className="locale-switcher" aria-label="language switcher">
