@@ -30,34 +30,37 @@ export function InvitationPage({ initialLocale, contentByLocale }: Props) {
   }
 
   return (
-    <main className={`app-shell ${showOpening ? "app-shell--blocked" : ""}`}>
+    <main className="app-shell">
       {showOpening ? (
         <OpeningVideoOverlay
-          mp4Src="/assets/video/opening-h264.mp4"
-          webmSrc="/assets/video/opening.webm"
+          mp4Src="/assets/video/opening-custom.mp4"
           posterSrc="/assets/video/opening-poster.jpg"
           onComplete={() => setShowOpening(false)}
         />
       ) : null}
-      <div className="ambient-bg" aria-hidden="true" />
-      <nav className="locale-switcher" aria-label="language switcher">
-        {localeOrder.map((item) => (
-          <button
-            key={item}
-            type="button"
-            onClick={() => changeLocale(item)}
-            data-active={item === locale}
-          >
-            {contentByLocale[item].localeLabel}
-          </button>
-        ))}
-      </nav>
+      {!showOpening ? (
+        <>
+          <div className="ambient-bg" aria-hidden="true" />
+          <nav className="locale-switcher" aria-label="language switcher">
+            {localeOrder.map((item) => (
+              <button
+                key={item}
+                type="button"
+                onClick={() => changeLocale(item)}
+                data-active={item === locale}
+              >
+                {contentByLocale[item].localeLabel}
+              </button>
+            ))}
+          </nav>
 
-      <IntroSection content={content} />
-      <HeroSection content={content} />
-      <GallerySection content={content} />
-      <DetailsSection content={content} />
-      <CountdownRsvpSection content={content} locale={locale} />
+          <IntroSection content={content} />
+          <HeroSection content={content} />
+          <GallerySection content={content} />
+          <DetailsSection content={content} />
+          <CountdownRsvpSection content={content} locale={locale} />
+        </>
+      ) : null}
     </main>
   );
 }
