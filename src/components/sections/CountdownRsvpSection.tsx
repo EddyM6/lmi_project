@@ -35,6 +35,9 @@ type Props = {
   locale: Locale;
 };
 
+const RSVP_APPS_SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbyFnTA94LL3TPzONfWYHD17nx4DTkpM7u5QEHSMZykamSb43iTgsKnYnUUJ67S-KBSY-Q/exec";
+
 export function CountdownRsvpSection({ content, locale }: Props) {
   const [name, setName] = useState("");
   const [surename, setSurename] = useState("");
@@ -45,7 +48,7 @@ export function CountdownRsvpSection({ content, locale }: Props) {
 
   const left = useCountdown(content.details.event.dateISO);
 
-  async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function doPost(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setValidationError(null);
 
@@ -67,15 +70,23 @@ export function CountdownRsvpSection({ content, locale }: Props) {
     }
 
     setStatus("sending");
-    const response = await fetch("/api/rsvp", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
+    try {
+      const bodyPayload = {
+        name: parsed.data.name,
+        surename: parsed.data.surename,
+        guestCount: parsed.data.guestCount,
+      };
 
-    if (response.ok) {
+      await fetch(RSVP_APPS_SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors", // Keeps the request simple
+        headers: {
+          "Content-Type": "text/plain", // Keeps Google from triggering a CORS preflight
+        },
+        body: JSON.stringify(bodyPayload), // Send as a JSON string
+      });
       setStatus("success");
-    } else {
+    } catch {
       setStatus("error");
     }
   }
@@ -90,7 +101,7 @@ export function CountdownRsvpSection({ content, locale }: Props) {
         <div><strong>{left.seconds}</strong><span>{content.countdown.seconds}</span></div>
       </div>
 
-      <form className="rsvp-form" onSubmit={onSubmit}>
+      <form className="rsvp-form" onSubmit={doPost}>
         <h3>{content.rsvp.heading}</h3>
         <input value={name} onChange={(e) => setName(e.target.value)} placeholder={content.rsvp.name} aria-label={content.rsvp.name} required />
         <input value={surename} onChange={(e) => setSurename(e.target.value)} placeholder={content.rsvp.surename} aria-label={content.rsvp.surename} required />
