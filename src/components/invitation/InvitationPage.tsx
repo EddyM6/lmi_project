@@ -8,7 +8,6 @@ import { CountdownRsvpSection } from "@/components/sections/CountdownRsvpSection
 import { DetailsSection } from "@/components/sections/DetailsSection";
 import { GallerySection } from "@/components/sections/GallerySection";
 import { HeroSection } from "@/components/sections/HeroSection";
-import { IntroSection } from "@/components/sections/IntroSection";
 import type { InvitationContent, Locale } from "@/lib/content/types";
 import { localeOrder } from "@/lib/locale";
 
@@ -56,7 +55,6 @@ export function InvitationPage({ initialLocale, contentByLocale }: Props) {
             ))}
           </nav>
 
-          <IntroSection content={content} />
           <HeroSection content={content} />
           <GallerySection content={content} />
           <DetailsSection content={content} />

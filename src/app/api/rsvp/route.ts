@@ -31,8 +31,8 @@ export async function POST(request: Request) {
     {
       name: parsed.data.name,
       surename: parsed.data.surename,
-      email: parsed.data.email,
-      attending: parsed.data.attending,
+      email: parsed.data.email ?? "",
+      attending: parsed.data.attending ?? "yes",
       guestCount: parsed.data.guestCount,
       locale: parsed.data.locale,
     },

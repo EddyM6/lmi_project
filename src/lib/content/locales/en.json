@@ -7,45 +7,45 @@
   },
   "hero": {
     "names": "Levon & Mari",
-    "date": "August 15, 2026",
+    "date": "August 14, 2026",
     "message": "Celebrate our most meaningful day with us."
   },
   "gallery": {
-    "heading": "Our Memories",
-    "caption": "Memories from a Paris night"
+    "heading": "With love, we invite you to attend our wedding celebration.",
+    "caption": "Sincerely Levon & Mari"
   },
   "details": {
     "heading": "Time & Agenda",
-    "agendaHeading": "Wedding Day Plan",
+    "agendaHeading": "Day Agenda",
     "locationsHeading": "Locations",
     "agenda": [
       {
-        "icon": "🏠",
-        "title": "Levon's House Ceremony",
-        "subtitle": "Family gathering and traditional pre-wedding blessing.",
-        "location": "Levon's family home, Ashtarak, Aragatsotn Province, Armenia",
-        "time": "11:30 AM"
+        "icon": "/assets/icons/wedding-rings.svg",
+        "title": "Bride's Home",
+        "subtitle": "Pre-wedding family gathering",
+        "location": "Address: Ashtarak, 88 Nerses Ashtaraketsi St.",
+        "time": "12:00"
       },
       {
-        "icon": "👰",
-        "title": "Mari's House Ceremony",
-        "subtitle": "Bride's home ceremony with family traditions and welcome.",
-        "location": "Mari's family home, Ashtarak, Aragatsotn Province, Armenia",
-        "time": "12:45 PM"
-      },
-      {
-        "icon": "⛪",
+        "icon": "/assets/icons/church.svg",
         "title": "Wedding Ceremony",
-        "subtitle": "Church ceremony in Tegher Monastery.",
-        "location": "Tegher Monastery, Tegher village, Aragatsotn Province, Armenia",
-        "time": "2:00 PM"
+        "subtitle": "Church ceremony",
+        "location": "Tegheri Monastery",
+        "time": "14:00"
       },
       {
-        "icon": "🥂",
+        "icon": "/assets/icons/wedding-rings.svg",
+        "title": "Groom's Home",
+        "subtitle": "Family gathering",
+        "location": "Address: Kasakhi 6",
+        "time": "15:30"
+      },
+      {
+        "icon": "/assets/icons/party-blower.svg",
         "title": "Wedding Reception",
-        "subtitle": "Dinner, toasts, and celebration at Wine Corner Restaurant.",
-        "location": "Wine Corner Restaurant, Ashtarak region, Aragatsotn Province, Armenia",
-        "time": "5:30 PM"
+        "subtitle": "Celebration dinner",
+        "location": "Wine Corner Ashtarak",
+        "time": "18:00"
       }
     ],
     "locations": [
@@ -65,12 +65,12 @@
       }
     ],
     "event": {
-      "dateLabel": "Saturday, August 15, 2026",
-      "dateISO": "2026-08-15T17:30:00+04:00",
-      "ceremonyTime": "17:30",
-      "receptionTime": "19:00",
+      "dateLabel": "Friday, August 14, 2026",
+      "dateISO": "2026-08-14T18:00:00+04:00",
+      "ceremonyTime": "14:00",
+      "receptionTime": "18:00",
       "venue": "Wine Corner",
-      "address": "Wine Corner",
+      "address": "Wine Corner Ashtarak",
       "mapsLink": "https://yandex.com/maps/org/wine_corner/139778273402/?ll=44.355975%2C40.284220&z=13",
       "mapsEmbedLink": "https://yandex.com/map-widget/v1/?ll=44.355975%2C40.284220&z=13&pt=44.355975,40.284220,pm2rdm",
       "mapsAction": "Open map"
@@ -92,6 +92,7 @@
     "yes": "Yes",
     "no": "No",
     "guestCount": "Guest count",
+    "guestCountHint": "How many people will be attending",
     "submit": "Submit",
     "sending": "Sending...",
     "success": "Thank you, your RSVP has been received.",

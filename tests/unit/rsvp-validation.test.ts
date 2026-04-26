@@ -5,8 +5,6 @@ describe("validateRsvpPayload", () => {
     const result = validateRsvpPayload({
       name: "Anna",
       surename: "Petrosyan",
-      email: "anna@example.com",
-      attending: "yes",
       guestCount: 2,
       locale: "hy",
     });
@@ -18,8 +16,6 @@ describe("validateRsvpPayload", () => {
     const result = validateRsvpPayload({
       name: "Anna",
       surename: "Petrosyan",
-      email: "anna@example.com",
-      attending: "yes",
       guestCount: 0,
       locale: "hy",
     });
@@ -27,16 +23,14 @@ describe("validateRsvpPayload", () => {
     expect(result.success).toBe(false);
   });
 
-  it("rejects invalid email", () => {
+  it("accepts payload without email and attending", () => {
     const result = validateRsvpPayload({
       name: "Anna",
       surename: "Petrosyan",
-      email: "not-email",
-      attending: "yes",
       guestCount: 1,
       locale: "hy",
     });
 
-    expect(result.success).toBe(false);
+    expect(result.success).toBe(true);
   });
 });

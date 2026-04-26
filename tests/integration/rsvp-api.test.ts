@@ -4,8 +4,6 @@ describe("submitToAppsScript", () => {
   const payload = {
     name: "Test User",
     surename: "Guest",
-    email: "guest@example.com",
-    attending: "yes" as const,
     guestCount: 2,
     locale: "en" as const,
   };

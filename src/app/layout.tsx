@@ -1,21 +1,16 @@
 import type { Metadata } from "next";
-import { Caveat, Cormorant_Garamond, Cinzel } from "next/font/google";
+import { Noto_Serif, Noto_Serif_Armenian } from "next/font/google";
 
 import "./globals.css";
 
-const cinzel = Cinzel({
-  subsets: ["latin"],
-  variable: "--font-display",
-});
-
-const cormorant = Cormorant_Garamond({
+const notoSerif = Noto_Serif({
   subsets: ["latin", "cyrillic"],
   variable: "--font-body",
 });
 
-const handwriting = Caveat({
-  subsets: ["latin", "cyrillic"],
-  variable: "--font-handwrite",
+const notoSerifArmenian = Noto_Serif_Armenian({
+  subsets: ["armenian"],
+  variable: "--font-armenian",
 });
 
 export const metadata: Metadata = {
@@ -30,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="hy">
-      <body className={`${cinzel.variable} ${cormorant.variable} ${handwriting.variable}`}>{children}</body>
+      <body className={`${notoSerif.variable} ${notoSerifArmenian.variable}`}>{children}</body>
     </html>
   );
 }

@@ -37,6 +37,7 @@ export type RsvpLabels = {
   yes: string;
   no: string;
   guestCount: string;
+  guestCountHint: string;
   submit: string;
   sending: string;
   success: string;

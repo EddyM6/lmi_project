@@ -70,6 +70,7 @@ const invitationContentSchema = z.object({
     yes: z.string().min(1),
     no: z.string().min(1),
     guestCount: z.string().min(1),
+    guestCountHint: z.string().min(1),
     submit: z.string().min(1),
     sending: z.string().min(1),
     success: z.string().min(1),

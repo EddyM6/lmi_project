@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
+import Image from "next/image";
 import { useRef } from "react";
 
 import { Section } from "@/components/ui/Section";
@@ -33,7 +34,6 @@ function AgendaCard({ item, index }: { item: AgendaEntry; index: number }) {
       }
       transition={{ duration: 0.76, ease: motionTokens.ease }}
     >
-      <span className="agenda-index">{index + 1}</span>
       <motion.span
         className="agenda-icon"
         initial={false}
@@ -44,15 +44,12 @@ function AgendaCard({ item, index }: { item: AgendaEntry; index: number }) {
         }
         transition={{ duration: 0.55, delay: 0.08 }}
       >
-        {item.icon}
+        <Image src={item.icon} alt="" aria-hidden="true" width={36} height={36} />
       </motion.span>
       <div className="agenda-content">
+        <p className="agenda-time">{item.time}</p>
         <h4>{item.title}</h4>
-        <p className="agenda-subtitle">{item.subtitle}</p>
-        <div className="agenda-meta">
-          <p className="agenda-location">{item.location}</p>
-          <p className="agenda-time">{item.time}</p>
-        </div>
+        <p className="agenda-location">{item.location}</p>
       </div>
     </motion.div>
   );

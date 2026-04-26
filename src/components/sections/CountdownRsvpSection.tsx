@@ -38,9 +38,7 @@ type Props = {
 export function CountdownRsvpSection({ content, locale }: Props) {
   const [name, setName] = useState("");
   const [surename, setSurename] = useState("");
-  const [email, setEmail] = useState("");
-  const [attending, setAttending] = useState<"yes" | "no">("yes");
-  const [guestCount, setGuestCount] = useState(1);
+  const [guestCount, setGuestCount] = useState("");
   const [website, setWebsite] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [validationError, setValidationError] = useState<string | null>(null);
@@ -54,9 +52,7 @@ export function CountdownRsvpSection({ content, locale }: Props) {
     const payload = {
       name,
       surename,
-      email,
-      attending,
-      guestCount,
+      guestCount: Number(guestCount),
       locale,
       website,
     };
@@ -66,10 +62,6 @@ export function CountdownRsvpSection({ content, locale }: Props) {
       const issue = parsed.error.issues[0]?.path[0];
       if (issue === "name") setValidationError(content.rsvp.validation.nameRequired);
       else if (issue === "surename") setValidationError(content.rsvp.validation.surenameRequired);
-      else if (issue === "email") {
-        if (!email.trim()) setValidationError(content.rsvp.validation.emailRequired);
-        else setValidationError(content.rsvp.validation.emailInvalid);
-      }
       else setValidationError(content.rsvp.validation.guestCountInvalid);
       return;
     }
@@ -102,18 +94,7 @@ export function CountdownRsvpSection({ content, locale }: Props) {
         <h3>{content.rsvp.heading}</h3>
         <input value={name} onChange={(e) => setName(e.target.value)} placeholder={content.rsvp.name} aria-label={content.rsvp.name} required />
         <input value={surename} onChange={(e) => setSurename(e.target.value)} placeholder={content.rsvp.surename} aria-label={content.rsvp.surename} required />
-        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder={content.rsvp.email} aria-label={content.rsvp.email} required />
-        <div className="radio-row">
-          <label>
-            <input type="radio" checked={attending === "yes"} onChange={() => setAttending("yes")} />
-            {content.rsvp.yes}
-          </label>
-          <label>
-            <input type="radio" checked={attending === "no"} onChange={() => setAttending("no")} />
-            {content.rsvp.no}
-          </label>
-        </div>
-        <input type="number" min={1} max={10} value={guestCount} onChange={(e) => setGuestCount(Number(e.target.value))} placeholder={content.rsvp.guestCount} aria-label={content.rsvp.guestCount} required />
+        <input type="number" min={1} max={10} value={guestCount} onChange={(e) => setGuestCount(e.target.value)} placeholder={content.rsvp.guestCountHint} aria-label={content.rsvp.guestCount} required />
 
         <input
           className="honeypot"

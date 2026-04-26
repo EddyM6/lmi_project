@@ -7,45 +7,45 @@
   },
   "hero": {
     "names": "Левон и Мари",
-    "date": "15 августа 2026",
+    "date": "14 августа 2026",
     "message": "Разделите с нами самый тёплый день нашей жизни."
   },
   "gallery": {
-    "heading": "Наши моменты",
-    "caption": "Воспоминания о парижской ночи"
+    "heading": "С любовью приглашаем вас присутствовать на нашей свадьбе.",
+    "caption": "С любовью, Левон и Мари"
   },
   "details": {
     "heading": "Время и Программа",
-    "agendaHeading": "План Свадебного Дня",
+    "agendaHeading": "Программа дня",
     "locationsHeading": "Локации",
     "agenda": [
       {
-        "icon": "🏠",
-        "title": "Церемония в Доме Левона",
-        "subtitle": "Семейное благословение и традиционная предсвадебная встреча.",
-        "location": "Семейный дом Левона, Аштарак, Арагацотнская область, Армения",
-        "time": "11:30"
+        "icon": "/assets/icons/wedding-rings.svg",
+        "title": "Дом невесты",
+        "subtitle": "Семейная предсвадебная встреча",
+        "location": "Адрес: г. Аштарак, ул. Нерсеса Аштаракеци, 88",
+        "time": "12:00"
       },
       {
-        "icon": "👰",
-        "title": "Церемония в Доме Мари",
-        "subtitle": "Традиционная церемония в доме невесты и семейная встреча гостей.",
-        "location": "Семейный дом Мари, Аштарак, Арагацотнская область, Армения",
-        "time": "12:45"
-      },
-      {
-        "icon": "⛪",
+        "icon": "/assets/icons/church.svg",
         "title": "Венчание",
-        "subtitle": "Церковная свадебная церемония в монастыре Тегер.",
-        "location": "Монастырь Тегер, село Тегер, Арагацотнская область, Армения",
+        "subtitle": "Церковная церемония",
+        "location": "Монастырь Техери",
         "time": "14:00"
       },
       {
-        "icon": "🥂",
-        "title": "Свадебный Ужин",
-        "subtitle": "Ужин, тосты и праздничная программа в Wine Corner Restaurant.",
-        "location": "Wine Corner Restaurant, район Аштарака, Арагацотнская область, Армения",
-        "time": "17:30"
+        "icon": "/assets/icons/wedding-rings.svg",
+        "title": "Дом жениха",
+        "subtitle": "Семейная встреча",
+        "location": "Адрес: Касахи 6",
+        "time": "15:30"
+      },
+      {
+        "icon": "/assets/icons/party-blower.svg",
+        "title": "Свадебный банкет",
+        "subtitle": "Праздничный ужин",
+        "location": "Wine Corner Ashtarak",
+        "time": "18:00"
       }
     ],
     "locations": [
@@ -65,12 +65,12 @@
       }
     ],
     "event": {
-      "dateLabel": "Суббота, 15 августа 2026",
-      "dateISO": "2026-08-15T17:30:00+04:00",
-      "ceremonyTime": "17:30",
-      "receptionTime": "19:00",
+      "dateLabel": "Пятница, 14 августа 2026",
+      "dateISO": "2026-08-14T18:00:00+04:00",
+      "ceremonyTime": "14:00",
+      "receptionTime": "18:00",
       "venue": "Wine Corner",
-      "address": "Wine Corner",
+      "address": "Wine Corner Ashtarak",
       "mapsLink": "https://yandex.com/maps/org/wine_corner/139778273402/?ll=44.355975%2C40.284220&z=13",
       "mapsEmbedLink": "https://yandex.com/map-widget/v1/?ll=44.355975%2C40.284220&z=13&pt=44.355975,40.284220,pm2rdm",
       "mapsAction": "Открыть карту"
@@ -92,6 +92,7 @@
     "yes": "Да",
     "no": "Нет",
     "guestCount": "Количество гостей",
+    "guestCountHint": "Сколько человек будет",
     "submit": "Отправить",
     "sending": "Отправка...",
     "success": "Спасибо, ваш ответ записан.",
