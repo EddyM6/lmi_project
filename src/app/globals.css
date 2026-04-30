@@ -469,6 +469,8 @@ p {
 
 .map-preview-wrap {
   margin-top: 0.35rem;
+  width: clamp(13rem, 72%, 18rem);
+  margin-inline: auto;
   border-radius: 0.6rem;
   overflow: clip;
   border: 0;
