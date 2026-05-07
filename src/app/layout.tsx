@@ -22,7 +22,7 @@ function getSiteUrl() {
 }
 
 const siteUrl = getSiteUrl();
-const shareImagePath = "/assets/images/share-preview.png";
+const shareImagePath = "/assets/images/share-preview-v2.png";
 const shareTitle = "Levon & Mari Invitation";
 const shareDescription = "Wedding invitation with multilingual support and RSVP";
 
@@ -38,9 +38,9 @@ export const metadata: Metadata = {
     images: [
       {
         url: shareImagePath,
-        width: 1024,
-        height: 1536,
-        alt: "Levon and Mari invitation wax seal",
+        width: 1047,
+        height: 1501,
+        alt: "Levon and Mari invitation envelope",
       },
     ],
   },
