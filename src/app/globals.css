@@ -537,6 +537,7 @@ p {
 .venue-title {
   font-size: clamp(1.2rem, 5vw, 1.6rem);
   font-family: var(--font-main);
+  font-weight: 700;
 }
 
 .map-preview-wrap {
