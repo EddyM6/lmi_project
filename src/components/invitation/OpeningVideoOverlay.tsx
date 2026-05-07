@@ -6,6 +6,7 @@ type OpeningVideoOverlayProps = {
   mp4Src: string;
   webmSrc?: string;
   posterSrc?: string;
+  onVideoInteraction?: () => void;
   onRevealStart?: () => void;
   onComplete: () => void;
 };
@@ -15,12 +16,20 @@ const FAILSAFE_MS = 9000;
 const BLOOM_IN_MS = 420;
 const TRANSITION_TRIGGER_BEFORE_END_SEC = 1.1;
 
-export function OpeningVideoOverlay({ mp4Src, webmSrc, posterSrc, onRevealStart, onComplete }: OpeningVideoOverlayProps) {
+export function OpeningVideoOverlay({
+  mp4Src,
+  webmSrc,
+  posterSrc,
+  onVideoInteraction,
+  onRevealStart,
+  onComplete,
+}: OpeningVideoOverlayProps) {
   const [isBlooming, setIsBlooming] = useState(false);
   const [isFading, setIsFading] = useState(false);
   const finishedRef = useRef(false);
   const transitionStartedRef = useRef(false);
   const bloomTimerRef = useRef<number | null>(null);
+  const lastVideoInteractionMsRef = useRef(0);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const startFadeOut = useCallback(() => {
@@ -52,10 +61,12 @@ export function OpeningVideoOverlay({ mp4Src, webmSrc, posterSrc, onRevealStart,
     const video = videoRef.current;
     if (!video) return;
 
+    // Keep intro video muted; background song is controlled by separate UI.
+    video.muted = true;
     const promise = video.play();
     if (promise) {
       void promise.catch(() => {
-        // Autoplay can fail on some devices; reveal page instead of getting stuck.
+        // If playback fails, reveal page instead of getting stuck.
         startLightTransition();
       });
     }
@@ -79,6 +90,13 @@ export function OpeningVideoOverlay({ mp4Src, webmSrc, posterSrc, onRevealStart,
     return () => window.clearTimeout(timer);
   }, [isFading, onComplete]);
 
+  const handleVideoInteraction = useCallback(() => {
+    const now = performance.now();
+    if (now - lastVideoInteractionMsRef.current < 280) return;
+    lastVideoInteractionMsRef.current = now;
+    onVideoInteraction?.();
+  }, [onVideoInteraction]);
+
   return (
     <div
       className={`opening-overlay ${isBlooming ? "opening-overlay--blooming" : ""} ${isFading ? "opening-overlay--fading" : ""}`}
@@ -92,6 +110,9 @@ export function OpeningVideoOverlay({ mp4Src, webmSrc, posterSrc, onRevealStart,
         muted
         playsInline
         preload="auto"
+        onPointerDown={handleVideoInteraction}
+        onTouchStart={handleVideoInteraction}
+        onClick={handleVideoInteraction}
         onTimeUpdate={(event) => {
           const element = event.currentTarget;
           const duration = element.duration;

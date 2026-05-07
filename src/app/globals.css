@@ -174,6 +174,78 @@ p {
   border-color: rgb(216 177 122 / 75%);
 }
 
+.audio-toggle {
+  position: fixed;
+  right: clamp(1rem, 3.8vw, 3rem);
+  bottom: calc(1rem + env(safe-area-inset-bottom));
+  width: clamp(3.2rem, 11vw, 4rem);
+  height: clamp(3.2rem, 11vw, 4rem);
+  border-radius: 50%;
+  border: 3px solid #080807;
+  background: rgb(250 247 241 / 92%);
+  color: #080807;
+  display: grid;
+  place-items: center;
+  z-index: 35;
+  cursor: pointer;
+  box-shadow: 0 10px 28px rgb(0 0 0 / 30%);
+  transition: opacity 0.28s ease, transform 0.28s ease, box-shadow 0.28s ease;
+}
+
+.audio-toggle-icon {
+  width: clamp(1.65rem, 5.2vw, 1.95rem);
+  height: clamp(1.65rem, 5.2vw, 1.95rem);
+  object-fit: contain;
+  display: block;
+  flex: 0 0 auto;
+}
+
+.audio-toggle--visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.audio-toggle--hidden {
+  opacity: 0;
+  transform: translateY(1.3rem);
+  pointer-events: none;
+}
+
+.audio-toggle--glow {
+  animation: audio-toggle-glow 3.2s ease-out 1;
+}
+
+@keyframes audio-toggle-glow {
+  0% {
+    box-shadow: 0 0 0 0 rgb(239 213 167 / 0.75), 0 10px 28px rgb(0 0 0 / 30%);
+  }
+
+  18% {
+    box-shadow: 0 0 0 15px rgb(239 213 167 / 0), 0 10px 28px rgb(0 0 0 / 30%);
+  }
+
+  33% {
+    box-shadow: 0 0 0 0 rgb(239 213 167 / 0.7), 0 10px 28px rgb(0 0 0 / 30%);
+  }
+
+  51% {
+    box-shadow: 0 0 0 15px rgb(239 213 167 / 0), 0 10px 28px rgb(0 0 0 / 30%);
+  }
+
+  66% {
+    box-shadow: 0 0 0 0 rgb(239 213 167 / 0.65), 0 10px 28px rgb(0 0 0 / 30%);
+  }
+
+  84% {
+    box-shadow: 0 0 0 15px rgb(239 213 167 / 0), 0 10px 28px rgb(0 0 0 / 30%);
+  }
+
+  100% {
+    box-shadow: 0 10px 28px rgb(0 0 0 / 30%);
+  }
+}
+
 .section {
   width: min(100%, 55rem);
   margin-inline: auto;
