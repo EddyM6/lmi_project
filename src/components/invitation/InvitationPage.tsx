@@ -135,7 +135,7 @@ export function InvitationPage({ initialLocale, contentByLocale }: Props) {
   }, [showContent]);
 
   return (
-    <main className="app-shell">
+    <main className={`app-shell ${showOpening ? "app-shell--blocked" : ""}`}>
       <audio ref={audioRef} src="/assets/audio/theme-song.mp3" loop preload="auto" />
       {showOpening ? (
         <OpeningVideoOverlay
