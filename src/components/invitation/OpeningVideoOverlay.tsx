@@ -31,6 +31,7 @@ export function OpeningVideoOverlay({
   const transitionStartedRef = useRef(false);
   const playbackStartedRef = useRef(false);
   const bloomTimerRef = useRef<number | null>(null);
+  const playbackCheckTimerRef = useRef<number | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const startFadeOut = useCallback(() => {
@@ -64,6 +65,9 @@ export function OpeningVideoOverlay({
       if (bloomTimerRef.current) {
         window.clearTimeout(bloomTimerRef.current);
       }
+      if (playbackCheckTimerRef.current) {
+        window.clearTimeout(playbackCheckTimerRef.current);
+      }
     };
   }, []);
 
@@ -95,6 +99,17 @@ export function OpeningVideoOverlay({
     video.muted = true;
     video.defaultMuted = true;
 
+    if (playbackCheckTimerRef.current) {
+      window.clearTimeout(playbackCheckTimerRef.current);
+    }
+    playbackCheckTimerRef.current = window.setTimeout(() => {
+      if (finishedRef.current || transitionStartedRef.current) return;
+      if (video.paused) {
+        playbackStartedRef.current = false;
+        setHasGestureStarted(false);
+      }
+    }, 1200);
+
     const playPromise = video.play();
     if (playPromise) {
       void playPromise.catch(() => {
@@ -105,13 +120,15 @@ export function OpeningVideoOverlay({
         if (mutedRetry) {
           void mutedRetry.catch(() => {
             playbackStartedRef.current = false;
+            setHasGestureStarted(false);
           });
           return;
         }
         playbackStartedRef.current = false;
+        setHasGestureStarted(false);
       });
     }
-  }, [onVideoInteraction]);
+  }, [onVideoInteraction, startLightTransition]);
 
   return (
     <div
@@ -130,15 +147,25 @@ export function OpeningVideoOverlay({
         playsInline
         preload="auto"
         onLoadedData={(event) => {
-          // Keep the first frame visible and paused before user gesture.
+          // Keep the first frame visible and paused before user gesture only.
+          if (playbackStartedRef.current) return;
           const element = event.currentTarget;
           element.pause();
           if (element.currentTime !== 0) {
             element.currentTime = 0;
           }
-          element.removeAttribute("poster");
+        }}
+        onPlaying={() => {
+          if (playbackCheckTimerRef.current) {
+            window.clearTimeout(playbackCheckTimerRef.current);
+            playbackCheckTimerRef.current = null;
+          }
         }}
         onTimeUpdate={(event) => {
+          if (playbackCheckTimerRef.current) {
+            window.clearTimeout(playbackCheckTimerRef.current);
+            playbackCheckTimerRef.current = null;
+          }
           const element = event.currentTarget;
           const duration = element.duration;
           if (!Number.isFinite(duration) || duration <= 0) return;
@@ -153,6 +180,14 @@ export function OpeningVideoOverlay({
         {webmSrc ? <source src={webmSrc} type="video/webm" /> : null}
         <source src={mp4Src} type="video/mp4" />
       </video>
+      {posterSrc ? (
+        <img
+          src={posterSrc}
+          alt=""
+          aria-hidden="true"
+          className={`opening-video-poster ${hasGestureStarted ? "opening-video-poster--hidden" : ""}`}
+        />
+      ) : null}
       <div className={`opening-start-hint ${hasGestureStarted ? "opening-start-hint--hidden" : ""}`} aria-hidden="true">
         {Array.from(START_HINT_TEXT).map((char, index) => (
           <span
