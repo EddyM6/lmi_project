@@ -104,6 +104,10 @@ main {
   transform: translateX(-50%) translateY(0.4rem) scale(0.96);
 }
 
+.opening-start-hint--hidden .opening-start-hint-letter {
+  animation: none;
+}
+
 @keyframes opening-hint-letter-wave {
   0% {
     color: #151515;
@@ -190,8 +194,23 @@ main {
 
 @supports (-webkit-touch-callout: none) {
   @media (hover: none) and (pointer: coarse) {
+    .opening-overlay {
+      contain: layout paint;
+      transform: translateZ(0);
+      will-change: opacity;
+    }
+
     .opening-overlay .opening-video {
       transition: opacity 0.34s ease;
+      transform: translateZ(0);
+      backface-visibility: hidden;
+      will-change: opacity;
+    }
+
+    .opening-overlay .opening-video-poster {
+      transform: translateZ(0);
+      backface-visibility: hidden;
+      will-change: opacity;
     }
 
     .opening-overlay--blooming .opening-video {
@@ -200,17 +219,23 @@ main {
     }
 
     .opening-overlay .opening-light-core {
-      filter: blur(14px);
-      transition: transform 0.34s ease, opacity 0.34s ease;
+      /* iOS Safari struggles with large blur+scale composites; keep a lightweight glow. */
+      filter: none;
+      transform: translate(-50%, -50%) scale(1);
+      transition: opacity 0.3s ease;
+      opacity: 0;
+      will-change: opacity;
     }
 
     .opening-overlay--blooming .opening-light-core {
-      transform: translate(-50%, -50%) scale(8);
+      opacity: 0.72;
+      transform: translate(-50%, -50%) scale(1);
     }
 
     .opening-overlay .opening-light-veil {
       clip-path: none;
-      transition: opacity 0.42s ease;
+      transition: opacity 0.32s ease;
+      will-change: opacity;
     }
 
     .opening-overlay--fading .opening-light-veil {
