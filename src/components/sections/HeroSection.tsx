@@ -16,9 +16,9 @@ export function HeroSection({ content }: HeroSectionProps) {
     <Section className="section section-hero">
       <motion.div
         className="hero-media"
-        initial={{ opacity: 0, filter: "blur(20px)", scale: 1.08 }}
-        animate={{ opacity: 1, filter: "blur(0px)", scale: 1 }}
-        transition={{ duration: 1.25, ease: motionTokens.ease }}
+        initial={{ opacity: 0, scale: 1.03 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.85, ease: motionTokens.ease }}
       >
         <Image
           src="/assets/images/couple-2.jpg"
@@ -31,9 +31,9 @@ export function HeroSection({ content }: HeroSectionProps) {
       <div className="hero-overlay" />
       <motion.div
         className="hero-copy"
-        initial={{ opacity: 0, y: 48, filter: "blur(12px)" }}
-        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-        transition={{ duration: 1.1, ease: motionTokens.ease }}
+        initial={{ opacity: 0, y: 28 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.82, ease: motionTokens.ease }}
       >
         <motion.p
           className="brand-mark"

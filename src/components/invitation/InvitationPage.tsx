@@ -1,13 +1,10 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { OpeningVideoOverlay } from "@/components/invitation/OpeningVideoOverlay";
-import { CountdownRsvpSection } from "@/components/sections/CountdownRsvpSection";
-import { DetailsSection } from "@/components/sections/DetailsSection";
-import { GallerySection } from "@/components/sections/GallerySection";
-import { HeroSection } from "@/components/sections/HeroSection";
 import type { InvitationContent, Locale } from "@/lib/content/types";
 import { localeOrder } from "@/lib/locale";
 
@@ -16,16 +13,29 @@ type Props = {
   contentByLocale: Record<Locale, InvitationContent>;
 };
 
+const loadHeroSection = () => import("@/components/sections/HeroSection").then((module) => module.HeroSection);
+const loadGallerySection = () => import("@/components/sections/GallerySection").then((module) => module.GallerySection);
+const loadDetailsSection = () => import("@/components/sections/DetailsSection").then((module) => module.DetailsSection);
+const loadCountdownRsvpSection = () =>
+  import("@/components/sections/CountdownRsvpSection").then((module) => module.CountdownRsvpSection);
+
+const HeroSection = dynamic(loadHeroSection, { loading: () => null });
+const GallerySection = dynamic(loadGallerySection, { loading: () => null });
+const DetailsSection = dynamic(loadDetailsSection, { loading: () => null });
+const CountdownRsvpSection = dynamic(loadCountdownRsvpSection, { loading: () => null });
+
 export function InvitationPage({ initialLocale, contentByLocale }: Props) {
   const router = useRouter();
   const [locale, setLocale] = useState<Locale>(initialLocale);
   const [showOpening, setShowOpening] = useState(true);
   const [showContent, setShowContent] = useState(false);
+  const [showDeferredSections, setShowDeferredSections] = useState(false);
   const [isMusicPlaying, setIsMusicPlaying] = useState(false);
   const [showAudioButton, setShowAudioButton] = useState(true);
   const [glowAudioButton, setGlowAudioButton] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const lastScrollYRef = useRef(0);
+  const sectionsPrefetchedRef = useRef(false);
 
   const content = useMemo(() => contentByLocale[locale], [contentByLocale, locale]);
 
@@ -76,6 +86,18 @@ export function InvitationPage({ initialLocale, contentByLocale }: Props) {
     startThemeSong();
   }, [startThemeSong, stopThemeSong]);
 
+  const preloadPostRevealSections = useCallback(() => {
+    if (sectionsPrefetchedRef.current) return;
+    sectionsPrefetchedRef.current = true;
+
+    void Promise.all([
+      loadHeroSection(),
+      loadGallerySection(),
+      loadDetailsSection(),
+      loadCountdownRsvpSection(),
+    ]);
+  }, []);
+
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -104,6 +126,16 @@ export function InvitationPage({ initialLocale, contentByLocale }: Props) {
     const timer = window.setTimeout(() => {
       setGlowAudioButton(false);
     }, 3200);
+
+    return () => window.clearTimeout(timer);
+  }, [showContent]);
+
+  useEffect(() => {
+    if (!showContent) return;
+
+    const timer = window.setTimeout(() => {
+      setShowDeferredSections(true);
+    }, 220);
 
     return () => window.clearTimeout(timer);
   }, [showContent]);
@@ -143,6 +175,7 @@ export function InvitationPage({ initialLocale, contentByLocale }: Props) {
           posterSrc="/assets/video/opening-poster.jpg"
           onVideoInteraction={() => {
             startThemeSong();
+            preloadPostRevealSections();
           }}
           onRevealStart={() => setShowContent(true)}
           onComplete={() => setShowOpening(false)}
@@ -165,9 +198,13 @@ export function InvitationPage({ initialLocale, contentByLocale }: Props) {
           </nav>
 
           <HeroSection content={content} />
-          <GallerySection content={content} />
-          <DetailsSection content={content} />
-          <CountdownRsvpSection content={content} locale={locale} />
+          {showDeferredSections ? (
+            <>
+              <GallerySection content={content} />
+              <DetailsSection content={content} />
+              <CountdownRsvpSection content={content} locale={locale} />
+            </>
+          ) : null}
 
           <button
             type="button"

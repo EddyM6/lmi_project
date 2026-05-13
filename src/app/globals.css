@@ -478,6 +478,8 @@ p {
   display: grid;
   gap: 1.2rem;
   padding-block: 0.5rem;
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 940px;
 }
 
 .section-head {
@@ -542,6 +544,8 @@ p {
   display: grid;
   gap: 1rem;
   padding: 0;
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 1260px;
 }
 
 .section-details > h2 {
@@ -694,6 +698,8 @@ p {
 .section-final {
   display: grid;
   gap: 1.4rem;
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 900px;
 }
 
 .countdown-grid {

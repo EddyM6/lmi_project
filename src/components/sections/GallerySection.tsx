@@ -24,10 +24,10 @@ export function GallerySection({ content }: GallerySectionProps) {
     <Section className="section section-gallery">
       <motion.div
         className="section-head"
-        initial={{ opacity: 0, y: 55, scale: 0.95, filter: "blur(10px)" }}
-        whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+        initial={{ opacity: 0, y: 34, scale: 0.98 }}
+        whileInView={{ opacity: 1, y: 0, scale: 1 }}
         viewport={{ amount: 0.35, once: true }}
-        transition={{ duration: 1.05, ease: motionTokens.ease }}
+        transition={{ duration: 0.8, ease: motionTokens.ease }}
       >
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
@@ -52,10 +52,10 @@ export function GallerySection({ content }: GallerySectionProps) {
           initial={false}
           animate={
             galleryInView
-              ? { opacity: 1, x: 0, rotate: -2, scale: 1, filter: "blur(0px)" }
-              : { opacity: 0, x: -420, rotate: -8, scale: 0.86, filter: "blur(18px)" }
+              ? { opacity: 1, x: 0, rotate: -2, scale: 1 }
+              : { opacity: 0, x: -180, rotate: -4, scale: 0.95 }
           }
-          transition={{ duration: 1.25, ease: motionTokens.ease }}
+          transition={{ duration: 0.9, ease: motionTokens.ease }}
         >
           <Image src="/assets/images/couple-1.jpg" alt="couple portrait" fill sizes="(max-width: 800px) 100vw, 50vw" />
         </motion.div>
@@ -64,10 +64,10 @@ export function GallerySection({ content }: GallerySectionProps) {
           initial={false}
           animate={
             galleryInView
-              ? { opacity: 1, x: 0, rotate: 2, scale: 1, filter: "blur(0px)" }
-              : { opacity: 0, x: 430, rotate: 9, scale: 0.86, filter: "blur(18px)" }
+              ? { opacity: 1, x: 0, rotate: 2, scale: 1 }
+              : { opacity: 0, x: 190, rotate: 4, scale: 0.95 }
           }
-          transition={{ duration: 1.25, delay: 0.12, ease: motionTokens.ease }}
+          transition={{ duration: 0.9, delay: 0.08, ease: motionTokens.ease }}
         >
           <Image src="/assets/images/couple-3.jpg" alt="couple dance" fill sizes="(max-width: 800px) 100vw, 50vw" />
         </motion.div>

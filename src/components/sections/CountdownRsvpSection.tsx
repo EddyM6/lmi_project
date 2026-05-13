@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 
 import { Section } from "@/components/ui/Section";
 import type { InvitationContent, Locale } from "@/lib/content/types";
@@ -39,14 +39,59 @@ const RSVP_APPS_SCRIPT_URL =
   "https://script.google.com/macros/s/AKfycbyFnTA94LL3TPzONfWYHD17nx4DTkpM7u5QEHSMZykamSb43iTgsKnYnUUJ67S-KBSY-Q/exec";
 
 export function CountdownRsvpSection({ content, locale }: Props) {
+  return (
+    <Section className="section section-final" >
+      <h2>{content.countdown.heading}</h2>
+      <CountdownClock
+        dateISO={content.details.event.dateISO}
+        daysLabel={content.countdown.days}
+        hoursLabel={content.countdown.hours}
+        minutesLabel={content.countdown.minutes}
+        secondsLabel={content.countdown.seconds}
+      />
+      <RsvpForm content={content.rsvp} locale={locale} />
+    </Section>
+  );
+}
+
+const CountdownClock = memo(function CountdownClock({
+  dateISO,
+  daysLabel,
+  hoursLabel,
+  minutesLabel,
+  secondsLabel,
+}: {
+  dateISO: string;
+  daysLabel: string;
+  hoursLabel: string;
+  minutesLabel: string;
+  secondsLabel: string;
+}) {
+  const left = useCountdown(dateISO);
+
+  return (
+    <div className="countdown-grid" aria-live="polite">
+      <div><strong>{left.days}</strong><span>{daysLabel}</span></div>
+      <div><strong>{left.hours}</strong><span>{hoursLabel}</span></div>
+      <div><strong>{left.minutes}</strong><span>{minutesLabel}</span></div>
+      <div><strong>{left.seconds}</strong><span>{secondsLabel}</span></div>
+    </div>
+  );
+});
+
+const RsvpForm = memo(function RsvpForm({
+  content,
+  locale,
+}: {
+  content: InvitationContent["rsvp"];
+  locale: Locale;
+}) {
   const [name, setName] = useState("");
   const [surename, setSurename] = useState("");
   const [guestCount, setGuestCount] = useState("");
   const [website, setWebsite] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [validationError, setValidationError] = useState<string | null>(null);
-
-  const left = useCountdown(content.details.event.dateISO);
 
   async function doPost(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -63,9 +108,9 @@ export function CountdownRsvpSection({ content, locale }: Props) {
     const parsed = validateRsvpPayload(payload);
     if (!parsed.success) {
       const issue = parsed.error.issues[0]?.path[0];
-      if (issue === "name") setValidationError(content.rsvp.validation.nameRequired);
-      else if (issue === "surename") setValidationError(content.rsvp.validation.surenameRequired);
-      else setValidationError(content.rsvp.validation.guestCountInvalid);
+      if (issue === "name") setValidationError(content.validation.nameRequired);
+      else if (issue === "surename") setValidationError(content.validation.surenameRequired);
+      else setValidationError(content.validation.guestCountInvalid);
       return;
     }
 
@@ -92,38 +137,28 @@ export function CountdownRsvpSection({ content, locale }: Props) {
   }
 
   return (
-    <Section className="section section-final" >
-      <h2>{content.countdown.heading}</h2>
-      <div className="countdown-grid" aria-live="polite">
-        <div><strong>{left.days}</strong><span>{content.countdown.days}</span></div>
-        <div><strong>{left.hours}</strong><span>{content.countdown.hours}</span></div>
-        <div><strong>{left.minutes}</strong><span>{content.countdown.minutes}</span></div>
-        <div><strong>{left.seconds}</strong><span>{content.countdown.seconds}</span></div>
-      </div>
+    <form className="rsvp-form" onSubmit={doPost}>
+      <h3>{content.heading}</h3>
+      <input value={name} onChange={(e) => setName(e.target.value)} placeholder={content.name} aria-label={content.name} required />
+      <input value={surename} onChange={(e) => setSurename(e.target.value)} placeholder={content.surename} aria-label={content.surename} required />
+      <input type="number" min={1} max={10} value={guestCount} onChange={(e) => setGuestCount(e.target.value)} placeholder={content.guestCountHint} aria-label={content.guestCount} required />
 
-      <form className="rsvp-form" onSubmit={doPost}>
-        <h3>{content.rsvp.heading}</h3>
-        <input value={name} onChange={(e) => setName(e.target.value)} placeholder={content.rsvp.name} aria-label={content.rsvp.name} required />
-        <input value={surename} onChange={(e) => setSurename(e.target.value)} placeholder={content.rsvp.surename} aria-label={content.rsvp.surename} required />
-        <input type="number" min={1} max={10} value={guestCount} onChange={(e) => setGuestCount(e.target.value)} placeholder={content.rsvp.guestCountHint} aria-label={content.rsvp.guestCount} required />
+      <input
+        className="honeypot"
+        tabIndex={-1}
+        autoComplete="off"
+        value={website}
+        onChange={(e) => setWebsite(e.target.value)}
+        aria-hidden="true"
+      />
 
-        <input
-          className="honeypot"
-          tabIndex={-1}
-          autoComplete="off"
-          value={website}
-          onChange={(e) => setWebsite(e.target.value)}
-          aria-hidden="true"
-        />
+      {validationError ? <p className="form-message error">{validationError}</p> : null}
+      {status === "success" ? <p className="form-message">{content.success}</p> : null}
+      {status === "error" ? <p className="form-message error">{content.failure}</p> : null}
 
-        {validationError ? <p className="form-message error">{validationError}</p> : null}
-        {status === "success" ? <p className="form-message">{content.rsvp.success}</p> : null}
-        {status === "error" ? <p className="form-message error">{content.rsvp.failure}</p> : null}
-
-        <button type="submit" disabled={status === "sending"}>
-          {status === "sending" ? content.rsvp.sending : content.rsvp.submit}
-        </button>
-      </form>
-    </Section>
+      <button type="submit" disabled={status === "sending"}>
+        {status === "sending" ? content.sending : content.submit}
+      </button>
+    </form>
   );
-}
+});

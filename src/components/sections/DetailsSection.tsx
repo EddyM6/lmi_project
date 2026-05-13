@@ -29,10 +29,10 @@ function AgendaCard({ item, index }: { item: AgendaEntry; index: number }) {
       initial={false}
       animate={
         isInView
-          ? { opacity: 1, x: 0, y: 0, filter: "blur(0px)" }
-          : { opacity: 0, x: index % 2 === 0 ? -140 : 140, y: 14, filter: "blur(8px)" }
+          ? { opacity: 1, x: 0, y: 0 }
+          : { opacity: 0, x: index % 2 === 0 ? -72 : 72, y: 8 }
       }
-      transition={{ duration: 0.76, ease: motionTokens.ease }}
+      transition={{ duration: 0.58, ease: motionTokens.ease }}
     >
       <motion.span
         className="agenda-icon"
