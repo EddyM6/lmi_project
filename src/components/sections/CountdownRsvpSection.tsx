@@ -92,6 +92,7 @@ const RsvpForm = memo(function RsvpForm({
   const [website, setWebsite] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [validationError, setValidationError] = useState<string | null>(null);
+  const isSubmitted = status === "success";
 
   async function doPost(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -138,27 +139,32 @@ const RsvpForm = memo(function RsvpForm({
 
   return (
     <form className="rsvp-form" onSubmit={doPost}>
-      <h3>{content.heading}</h3>
-      <input value={name} onChange={(e) => setName(e.target.value)} placeholder={content.name} aria-label={content.name} required />
-      <input value={surename} onChange={(e) => setSurename(e.target.value)} placeholder={content.surename} aria-label={content.surename} required />
-      <input type="number" min={1} max={10} value={guestCount} onChange={(e) => setGuestCount(e.target.value)} placeholder={content.guestCountHint} aria-label={content.guestCount} required />
+      <h3>{isSubmitted ? content.success : content.heading}</h3>
+      {!isSubmitted ? (
+        <>
+          <input value={name} onChange={(e) => setName(e.target.value)} placeholder={content.name} aria-label={content.name} required />
+          <input value={surename} onChange={(e) => setSurename(e.target.value)} placeholder={content.surename} aria-label={content.surename} required />
+          <input type="number" min={1} max={10} value={guestCount} onChange={(e) => setGuestCount(e.target.value)} placeholder={content.guestCountHint} aria-label={content.guestCount} required />
 
-      <input
-        className="honeypot"
-        tabIndex={-1}
-        autoComplete="off"
-        value={website}
-        onChange={(e) => setWebsite(e.target.value)}
-        aria-hidden="true"
-      />
+          <input
+            className="honeypot"
+            tabIndex={-1}
+            autoComplete="off"
+            value={website}
+            onChange={(e) => setWebsite(e.target.value)}
+            aria-hidden="true"
+          />
+        </>
+      ) : null}
 
       {validationError ? <p className="form-message error">{validationError}</p> : null}
-      {status === "success" ? <p className="form-message">{content.success}</p> : null}
       {status === "error" ? <p className="form-message error">{content.failure}</p> : null}
 
-      <button type="submit" disabled={status === "sending"}>
-        {status === "sending" ? content.sending : content.submit}
-      </button>
+      {!isSubmitted ? (
+        <button type="submit" disabled={status === "sending"}>
+          {status === "sending" ? content.sending : content.submit}
+        </button>
+      ) : null}
     </form>
   );
 });
